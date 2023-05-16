@@ -476,6 +476,10 @@ pub(crate) struct Supergraph {
 
     /// Query planning options
     pub(crate) query_planning: QueryPlanning,
+
+    /// Body payload size limit in bytes
+    /// Default: 2MB
+    pub(crate) body_size_limit: usize,
 }
 
 fn default_defer_support() -> bool {
@@ -491,6 +495,7 @@ impl Supergraph {
         introspection: Option<bool>,
         defer_support: Option<bool>,
         query_planning: Option<QueryPlanning>,
+        body_size_limit: Option<usize>,
     ) -> Self {
         Self {
             listen: listen.unwrap_or_else(default_graphql_listen),
@@ -498,6 +503,7 @@ impl Supergraph {
             introspection: introspection.unwrap_or_else(default_graphql_introspection),
             defer_support: defer_support.unwrap_or_else(default_defer_support),
             query_planning: query_planning.unwrap_or_default(),
+            body_size_limit: body_size_limit.unwrap_or_else(default_graphql_body_payload_size),
         }
     }
 }
@@ -512,6 +518,7 @@ impl Supergraph {
         introspection: Option<bool>,
         defer_support: Option<bool>,
         query_planning: Option<QueryPlanning>,
+        body_size_limit: Option<usize>,
     ) -> Self {
         Self {
             listen: listen.unwrap_or_else(test_listen),
@@ -519,6 +526,7 @@ impl Supergraph {
             introspection: introspection.unwrap_or_else(default_graphql_introspection),
             defer_support: defer_support.unwrap_or_else(default_defer_support),
             query_planning: query_planning.unwrap_or_default(),
+            body_size_limit: body_size_limit.unwrap_or_else(default_graphql_body_payload_size),
         }
     }
 }
@@ -1102,4 +1110,8 @@ fn default_graphql_path() -> String {
 
 fn default_graphql_introspection() -> bool {
     false
+}
+
+fn default_graphql_body_payload_size() -> usize {
+    1024 * 2_000
 }

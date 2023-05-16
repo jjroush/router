@@ -1221,10 +1221,18 @@ expression: "&schema"
             "redis": null
           },
           "warmed_up_queries": 0
-        }
+        },
+        "body_size_limit": 2048000
       },
       "type": "object",
       "properties": {
+        "body_size_limit": {
+          "description": "Body payload size limit in bytes Default: 2MB",
+          "default": 2048000,
+          "type": "integer",
+          "format": "uint",
+          "minimum": 0.0
+        },
         "defer_support": {
           "description": "Set to false to disable defer support",
           "default": true,

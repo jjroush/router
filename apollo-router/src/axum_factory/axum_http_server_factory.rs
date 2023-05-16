@@ -7,6 +7,7 @@ use std::sync::atomic::Ordering;
 use std::sync::Arc;
 use std::time::Instant;
 
+use axum::extract::DefaultBodyLimit;
 use axum::extract::Extension;
 use axum::extract::State;
 use axum::http::StatusCode;
@@ -395,11 +396,17 @@ where
                 handle_graphql(service.create().boxed(), request)
             }
         })
+        .layer(DefaultBodyLimit::max(
+            configuration.supergraph.body_size_limit,
+        ))
         .post({
             move |Extension(service): Extension<RF>, request: Request<Body>| {
                 handle_graphql(service.create().boxed(), request)
             }
-        }),
+        })
+        .layer(DefaultBodyLimit::max(
+            configuration.supergraph.body_size_limit,
+        )),
     );
 
     if configuration.supergraph.path == "/*" {
@@ -410,11 +417,17 @@ where
                     handle_graphql(service.create().boxed(), request)
                 }
             })
+            .layer(DefaultBodyLimit::max(
+                configuration.supergraph.body_size_limit,
+            ))
             .post({
                 move |Extension(service): Extension<RF>, request: Request<Body>| {
                     handle_graphql(service.create().boxed(), request)
                 }
-            }),
+            })
+            .layer(DefaultBodyLimit::max(
+                configuration.supergraph.body_size_limit,
+            )),
         );
     }
 
