@@ -396,6 +396,18 @@ The Apollo Router can serve any of the following landing pages to browsers that 
 
     > ⚠️ **Do not enable Sandbox in production!** Sandbox requires enabling introspection, which is strongly discouraged in production environments.
 
+### Body Size Limit
+
+By default, the router has a max body size of 2MB. You can adjust accordingly via:
+
+
+```yaml title="router.yaml"
+supergraph:
+  # Body payload size limit in bytes
+  # Default: 2MB
+  body_size_limit: 1000000
+```
+
 ### Subgraph routing URLs
 
 By default, the Apollo Router obtains the routing URL for each of your subgraphs from the composed supergraph schema you provide it. In most cases, no additional configuration is required.
