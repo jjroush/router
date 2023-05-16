@@ -56,7 +56,7 @@ in foreground.
 Once the subgraphs are up and running, run Apollo Router with this command:
 
 ```shell
-cargo run --release -- -s ./examples/graphql/local.graphql -c examples/telemetry/jaeger.router.yaml
+cargo run --release -- -s ./examples/graphql/local.graphql -c examples/telemetry/jaeger-agent.router.yaml
 ```
 
 Go to https://studio.apollographql.com/sandbox/explorer to make queries and
